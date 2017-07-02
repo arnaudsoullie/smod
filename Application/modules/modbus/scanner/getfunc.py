@@ -21,7 +21,7 @@ class Module:
 		'UID'		:[None		,True	,'Modbus Slave UID.'],
 		'Threads'	:[1		,False	,'The number of concurrent threads'],
 		'Output'	:[True		,False	,'The stdout save in output directory']
-	}	
+	}
 	output = ''
 
 	def exploit(self):
@@ -50,19 +50,19 @@ class Module:
 		if(str.find('[+]') != -1):
 			print str.replace('[+]',color + '[+]' + bcolors.ENDC)
 		elif(str.find('[-]') != -1):
-			print str.replace('[-]',color + '[+]' + bcolors.ENDC)
+			print str.replace('[-]',color + '[-]' + bcolors.ENDC)
 		else:
 			print str
 
 	def do(self,ip):
 		c = connectToTarget(ip,self.options['RPORT'][0])
 		if(c == None):
-			self.printLine('[-] Modbus is not running on : ' + ip,bcolors.WARNING)
+			self.printLine('[-] Modbus is not running on : ' + ip,bcolors.FAIL)
 			return None
 		self.printLine('[+] Looking for supported function codes on ' + ip,bcolors.OKGREEN)
 		for i in range(0,256): # Total of 127 (legal) function codes
 			ans = c.sr1(ModbusADU(transId=getTransId(),unitId=int(self.options['UID'][0]))/ModbusPDU_Read_Generic(funcCode=i),timeout=timeout, verbose=0)
-	
+
 			# We are using the raw data format, because not all function
 			# codes are supported out by this library.
 			if ans:
@@ -70,21 +70,18 @@ class Module:
 				data2 = data.encode('hex')
 				returnCode = int(data2[14:16],16)
 				exceptionCode = int(data2[17:18],16)
-	
+
 				if returnCode > 127 and exceptionCode == 0x01:
 					# If return function code is > 128 --> error code
 					#print "Function Code "+str(i)+" not supported."
+					self.printLine("[-] Function Code "+str(i)+" is not supported.",bcolors.FAIL)
 					a=1
 				else:
 					if(function_code_name.get(i) != None):
 						self.printLine("[+] Function Code "+str(i)+"("+function_code_name.get(i)+") is supported.",bcolors.OKGREEN)
-						
+
 					else:
 						self.printLine("[+] Function Code "+str(i)+" is supported.",bcolors.OKGREEN)
-						
-			else:
-				self.printLine("[+] Function Code "+str(i)+" probably supported.",bcolors.OKGREEN)
-				
 
-		
-		
+			else:
+				self.printLine("[-] No response received for Function Code "+str(i)+".",bcolors.FAIL)
