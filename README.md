@@ -1,9 +1,9 @@
-#smod
-smod is a modular framework with every kind of diagnostic and offensive feature you could need in order to pentest modbus protocol. It is a full Modbus protocol implementation using Python and Scapy. This software could be run on Linux/OSX under python 2.7.x. 
+# smod
+smod is a modular framework with every kind of diagnostic and offensive feature you could need in order to pentest modbus protocol. It is a full Modbus protocol implementation using Python and Scapy. This software could be run on Linux/OSX under python 2.7.x.
 
 Feel free to make pull requests, if there's anything you feel we could do better.
 
-##Summery
+## Summary
 SCADA (Process Control Networks) based systems have moved from proprietary closed networks to open source solutions and TCP/IP enabled networks steadily over recent years. This has made them vulnerable to the same security vulnerabilities that face our traditional computer networks.
 
 The Modbus/TCP protocol was used as the reference protocol to display the effectiveness of the test bed in carrying out cyber attacks on a power system protocol. Modbus/TCP was chosen specifically for these reasons:
@@ -13,13 +13,13 @@ The Modbus/TCP protocol was used as the reference protocol to display the effect
 
 You can use this tool to vulnerability assessment a modbus protocol.
 
-##Demo
+## Demo
 Just a little demo showing off the basics
 ```
-root@kali:~/smod# python smod.py 
- _______ 
+root@kali:~/smod# python smod.py
+ _______
 < SMOD >
- ------- 
+ -------
         \   ^__^
          \  (xx)\_______
             (__)\       )\/\
@@ -38,7 +38,7 @@ SMOD >help
  exit     Exit the console                                 
  exploit  Run module                                       
  help     Help menu                                        
- show     Displays modules of a given type, or all modules 
+ show     Displays modules of a given type, or all modules
  set      Sets a variable to a value                       
  use      Selects a module by name                         
 SMOD >show modules
@@ -47,7 +47,7 @@ SMOD >show modules
  modbus/dos/arp                                DOS with Arp Poisoning                            
  modbus/dos/galilRIO                           DOS Galil RIO-47100
  modbus/dos/writeAllCoils                      DOS With Write All Coils                          
- modbus/dos/writeAllRegister                   DOS With Write All Register Function 
+ modbus/dos/writeAllRegister                   DOS With Write All Register Function
  modbus/dos/writeSingleCoils                   DOS With Write Single Coil Function               
  modbus/dos/writeSingleRegister                DOS Write Single Register Function                
  modbus/function/fuzzing                       Fuzzing Modbus Functions                          
@@ -57,7 +57,7 @@ SMOD >show modules
  modbus/function/readDiscreteInputException    Fuzzing Read Discrete Inputs Exception Function   
  modbus/function/readExceptionStatus           Fuzzing Read Exception Status Function            
  modbus/function/readHoldingRegister           Fuzzing Read Holding Registers Function           
- modbus/function/readHoldingRegisterException  Fuzzing Read Holding Registers Exception Function 
+ modbus/function/readHoldingRegisterException  Fuzzing Read Holding Registers Exception Function
  modbus/function/readInputRegister             Fuzzing Read Input Registers Function             
  modbus/function/readInputRegisterException    Fuzzing Read Input Registers Exception Function   
  modbus/function/writeSingleCoils              Fuzzing Write Single Coil Function                
@@ -77,11 +77,11 @@ SMOD modbus(uid) >show options
  ----      ---------------  --------  -----------                                 
  Function  1                False     Function code, Defualt:Read Coils.          
  Output    True             False     The stdout save in output directory         
- RHOSTS                     True      The target address range or CIDR identifier 
+ RHOSTS                     True      The target address range or CIDR identifier
  RPORT     502              False     The port number for modbus protocol         
  Threads   1                False     The number of concurrent threads            
 SMOD modbus(uid) >set RHOSTS 192.168.1.6
-SMOD modbus(uid) >exploit 
+SMOD modbus(uid) >exploit
 [+] Module Brute Force UID Start
 [+] Start Brute Force UID on : 192.168.1.6
 [+] UID on 192.168.1.6 is : 10
@@ -94,13 +94,13 @@ SMOD modbus(getfunc) >show options
  Name     Current Setting  Required  Description                                 
  ----     ---------------  --------  -----------                                 
  Output   True             False     The stdout save in output directory         
- RHOSTS                    True      The target address range or CIDR identifier 
+ RHOSTS                    True      The target address range or CIDR identifier
  RPORT    502              False     The port number for modbus protocol         
  Threads  1                False     The number of concurrent threads            
  UID      None             True      Modbus Slave UID.                           
 SMOD modbus(getfunc) >set RHOSTS 192.168.1.6
 SMOD modbus(getfunc) >set UID 10
-SMOD modbus(getfunc) >exploit 
+SMOD modbus(getfunc) >exploit
 [+] Module Get Function Start
 [+] Looking for supported function codes on 192.168.1.6
 [+] Function Code 1(Read Coils) is supported.
@@ -121,7 +121,7 @@ SMOD modbus(getfunc) >exploit
 SMOD modbus(getfunc) >
 ```
 
-Fuzzing Read Coils Function 
+Fuzzing Read Coils Function
 ```
 SMOD >use modbus/function/readCoils
 SMOD modbus(readCoils) >show options
@@ -129,14 +129,14 @@ SMOD modbus(readCoils) >show options
  ----       ---------------  --------  -----------                                 
  Output     True             False     The stdout save in output directory         
  Quantity   0x0001           True      Registers Values.                           
- RHOSTS                      True      The target address range or CIDR identifier 
+ RHOSTS                      True      The target address range or CIDR identifier
  RPORT      502              False     The port number for modbus protocol         
  StartAddr  0x0000           True      Start Address.                              
  Threads    1                False     The number of concurrent threads            
  UID        None             True      Modbus Slave UID.                           
 SMOD modbus(readCoils) >set RHOSTS 192.168.1.6
 SMOD modbus(readCoils) >set UID 10
-SMOD modbus(readCoils) >exploit 
+SMOD modbus(readCoils) >exploit
 [+] Module Read Coils Function Start
 [+] Connecting to 192.168.1.6
 [+] Response is :
